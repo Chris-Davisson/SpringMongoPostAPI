@@ -1,6 +1,6 @@
 package com.temp.chris.controllers;
 
-import com.temp.chris.models.Post;
+import com.temp.chris.models.MongoPost;
 import com.temp.chris.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +20,13 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts() {
+    public List<MongoPost> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @PostMapping
-    public String createPost(@RequestBody Post post) {
-        return postService.savePost(post) ? "Post Created" : "Post Create Failed";
+    public String createPost(@RequestBody MongoPost mongoPost) {
+        return postService.savePost(mongoPost) ? "Post Created" : "Post Create Failed";
     }
 
     @GetMapping("/{_id}")
@@ -35,14 +35,14 @@ public class PostController {
     }
 
     @PutMapping("/{_id}")
-    public String updatePost(@PathVariable String _id, @RequestBody Post post) {
-        Optional<Post> op = Optional.ofNullable(postService.getPostById(post.getId()));
+    public String updatePost(@PathVariable String _id, @RequestBody MongoPost mongoPost) {
+        Optional<MongoPost> op = Optional.ofNullable(postService.getPostById(mongoPost.getId()));
 
-        return op.map(currPost -> {
-            currPost.setTitle(post.getTitle());
-            currPost.setContent(post.getContent());
-            currPost.setDate(post.getDate());
-            postService.update(currPost);
+        return op.map(currMongoPost -> {
+            currMongoPost.setTitle(mongoPost.getTitle());
+            currMongoPost.setContent(mongoPost.getContent());
+            currMongoPost.setDate(mongoPost.getDate());
+            postService.update(currMongoPost);
             return "Post updated successfully";
         }).orElse("Update failed: Post not found");
 
