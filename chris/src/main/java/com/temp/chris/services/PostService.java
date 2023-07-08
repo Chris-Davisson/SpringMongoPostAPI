@@ -1,8 +1,9 @@
 package com.temp.chris.services;
 
-import com.temp.chris.models.MongoPost;
+import com.temp.chris.models.Post;
 import com.temp.chris.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,33 +22,33 @@ public class PostService   {
 
     //Crud Opperations
     //Create
-    public boolean savePost(MongoPost mongoPost) {
-        return postRepo.save(mongoPost) != null;
+    public boolean savePost(Post post) {
+        return postRepo.save(post) != null;
     }
 
 
     //Read
-    public List<MongoPost> getAllPosts() {
+    public List<Post> getAllPosts() {
         return postRepo.findAll();
     }
 
-    public MongoPost getPostByTitle(String title){
+    public Post getPostByTitle(String title){
         return postRepo.findByTitle(title).orElse(null);
     }
 
-    public MongoPost getPostById(String _id) {
+    public Post getPostById(String _id) {
         return postRepo.findById(_id).orElse(null);
     }
 
 
     //Update
     public boolean update(String id, String title , String content , Date date){
-        MongoPost mongoPost = new MongoPost(id, title, content, date);
-        return postRepo.update(mongoPost);
+        Post post = new Post(id, title, content, date);
+        return postRepo.update(post);
     }
 
-    public boolean update(MongoPost mongoPost) {
-        return postRepo.update(mongoPost);
+    public boolean update(Post post) {
+        return postRepo.update(post);
     }
 
 
@@ -60,8 +61,8 @@ public class PostService   {
         return postRepo.deleteById(id);
     }
 
-    public void deletePost(MongoPost mongoPost) {
-        postRepo.delete(mongoPost);
+    public void deletePost(Post post) {
+        postRepo.delete(post);
     }
 
 

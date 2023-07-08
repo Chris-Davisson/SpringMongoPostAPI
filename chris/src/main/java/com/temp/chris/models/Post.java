@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document(collection = "post")
-public class MongoPost {
+public class Post {
 
     @Id
     private String _id;
@@ -17,7 +17,7 @@ public class MongoPost {
 
 
     //I think the id needs to be part of a service
-    public MongoPost(String _id, String title, String content, Date date) {
+    public Post(String _id, String title, String content, Date date) {
         this._id = _id;
         this.title = title;
         this.content = content;

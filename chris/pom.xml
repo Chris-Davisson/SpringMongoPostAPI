@@ -31,13 +31,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.amazonaws.serverless</groupId>
-			<artifactId>aws-serverless-java-container-springboot2</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>

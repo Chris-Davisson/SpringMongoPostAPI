@@ -1,7 +1,7 @@
 package com.temp.chris.repository;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.temp.chris.models.MongoPost;
+import com.temp.chris.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -22,62 +22,62 @@ public class PostRepository {
     private MongoTemplate mongoTemplate;
 
 
-    public List<MongoPost> findAll() {
-        return mongoTemplate.findAll(MongoPost.class);
+    public List<Post> findAll() {
+        return mongoTemplate.findAll(Post.class);
     }
 
-    public Optional<MongoPost> findById(String _id){
+    public Optional<Post> findById(String _id){
         Query query = new Query(Criteria.where("_id").is(_id));
-        return Optional.ofNullable(mongoTemplate.findOne(query , MongoPost.class));
+        return Optional.ofNullable(mongoTemplate.findOne(query , Post.class));
     }
 
-    public Optional<MongoPost> findByTitle(String title){
+    public Optional<Post> findByTitle(String title){
         Query query = new Query(Criteria.where("title").is(title));
-        return Optional.ofNullable(mongoTemplate.findOne(query , MongoPost.class));
+        return Optional.ofNullable(mongoTemplate.findOne(query , Post.class));
     }
 
-    public List<MongoPost> findAllByTitle(String title){
+    public List<Post> findAllByTitle(String title){
         Query query = new Query(Criteria.where("title").is(title));
-        return mongoTemplate.find(query, MongoPost.class);
+        return mongoTemplate.find(query,Post.class);
     }
 
-    public MongoPost save(MongoPost mongoPost) {
-        return mongoTemplate.save(mongoPost);
+    public Post save(Post post) {
+        return mongoTemplate.save(post);
     }
 
-    public void delete(MongoPost entity) {
+    public void delete(Post entity) {
         Query q = new Query(Criteria.where("_id").is(entity.getId()));
-        mongoTemplate.remove(q, MongoPost.class);
+        mongoTemplate.remove(q, Post.class);
     }
 
     public boolean existsById(String s) {
         Query q = new Query(Criteria.where("_id").is(s));
-        return mongoTemplate.exists(q , MongoPost.class);
+        return mongoTemplate.exists(q , Post.class);
     }
     public boolean deleteById(String s) {
         Query q = new Query(Criteria.where("_id").is(s));
-        DeleteResult res = mongoTemplate.remove(q, MongoPost.class);
+        DeleteResult res = mongoTemplate.remove(q, Post.class);
         return res.getDeletedCount() > 0;
     }
     public boolean deleteAll() {
         Query q = new Query();
-        DeleteResult res = mongoTemplate.remove(q, MongoPost.class);
+        DeleteResult res = mongoTemplate.remove(q, Post.class);
         return res.getDeletedCount() > 0;
     }
 
-    public boolean update(MongoPost mongoPost){
-        Query q = new Query(Criteria.where("_id").is(mongoPost.getId()));
+    public boolean update(Post post){
+        Query q = new Query(Criteria.where("_id").is(post.getId()));
         Update update = new Update()
-                .set("title" , mongoPost.getTitle())
-                .set("content", mongoPost.getContent())
-                .set("date" , mongoPost.getDate());
+                .set("title" , post.getTitle())
+                .set("content", post.getContent())
+                .set("date" , post.getDate());
 
-        UpdateResult  res = mongoTemplate.updateFirst(q , update , MongoPost.class);
+        UpdateResult  res = mongoTemplate.updateFirst(q , update , Post.class);
         return res.getMatchedCount() > 0;
     }
 
     public int count() {
         Query q = new Query();
-        return ((int) mongoTemplate.count(q, MongoPost.class));
+        return ((int) mongoTemplate.count(q, Post.class));
     }
 }
