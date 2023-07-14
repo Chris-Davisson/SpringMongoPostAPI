@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
@@ -19,12 +19,12 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
     }
 
-    @PostMapping
+    @PostMapping("")
     public String createPost(@RequestBody Post post) {
         return postService.savePost(post) ? "Post Created" : "Post Create Failed";
     }
@@ -60,7 +60,7 @@ public class PostController {
 
     }
 
-    @GetMapping("/title/ c{title}")
+    @GetMapping("/title/{title}")
     public String getPostByTitle(@PathVariable String title) {
         return postService.getPostByTitle(title) != null ? "Success" : "Fail";
     }
